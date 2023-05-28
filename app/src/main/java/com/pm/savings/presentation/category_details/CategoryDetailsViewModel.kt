@@ -51,6 +51,8 @@ class CategoryDetailsViewModel @Inject constructor(
                     } catch (e: Exception) {
                         e.printStackTrace()
                         _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.error_couldn_t_delete_item)))
+                    } finally {
+                        _uiChannel.send(UiEvent.PopBackStack)
                     }
                 }
             }
@@ -79,6 +81,8 @@ class CategoryDetailsViewModel @Inject constructor(
                     } catch (e: Exception) {
                         e.printStackTrace()
                         _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.error_couldn_t_save_item)))
+                    } finally {
+                        _uiChannel.send(UiEvent.PopBackStack)
                     }
                 }
             }

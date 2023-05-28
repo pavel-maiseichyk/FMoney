@@ -112,7 +112,7 @@ fun FinanceRoot(
 
     SideEffect {
         systemUiController.setNavigationBarColor(
-            color = Color.Transparent, darkIcons = true
+            color = Color.White, darkIcons = true
         )
     }
 
