@@ -102,9 +102,18 @@ class SavingDetailsViewModel @Inject constructor(
 
             SavingDetailsEvent.OnSaveClick -> {
                 viewModelScope.launch {
-                    val endSum = state.value.endSum.ifBlank { return@launch }.toDouble()
-                    val savedSum = state.value.savedSum.ifBlank { return@launch }.toDouble()
-                    val title = state.value.title.ifBlank { return@launch }
+                    val endSum = state.value.endSum.ifBlank {
+                        _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.fill_all_fields)))
+                        return@launch
+                    }.toDouble()
+                    val savedSum = state.value.savedSum.ifBlank {
+                        _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.fill_all_fields)))
+                        return@launch
+                    }.toDouble()
+                    val title = state.value.title.ifBlank {
+                        _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.fill_all_fields)))
+                        return@launch
+                    }
                     if (endSum < savedSum) {
                         _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.error_sum_differences)))
                         return@launch

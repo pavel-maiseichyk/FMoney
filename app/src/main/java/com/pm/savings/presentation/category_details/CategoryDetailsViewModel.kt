@@ -72,7 +72,7 @@ class CategoryDetailsViewModel @Inject constructor(
                         categoryDataSource.insertCategory(
                             Category(
                                 id = state.value.id,
-                                title = state.value.title,
+                                title = state.value.title.trim(),
                                 color = state.value.color,
                                 type = state.value.selectedType
                             )

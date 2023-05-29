@@ -10,7 +10,6 @@ import com.pm.savings.domain.core.use_case.FilterOutDigits
 import com.pm.savings.domain.core.util.DateTimeUtil
 import com.pm.savings.domain.operations.model.Operation
 import com.pm.savings.domain.operations.repository.OperationsDataSource
-import com.pm.savings.domain.wallet.model.Wallet
 import com.pm.savings.domain.wallet.repository.WalletDataSource
 import com.pm.savings.presentation.core.UiEvent
 import com.pm.savings.presentation.core.UiText
@@ -110,10 +109,10 @@ class OperationDetailsViewModel @Inject constructor(
 //                            walletsDataSource.insertWallet(wallet.copy(sum = wallet.sum - operation.sum))
 //                        }
                         _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.saved_successfully)))
+                        _uiChannel.send(UiEvent.PopBackStack)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.error_couldn_t_save_item)))
-                    } finally {
                         _uiChannel.send(UiEvent.PopBackStack)
                     }
                 }
@@ -199,7 +198,8 @@ class OperationDetailsViewModel @Inject constructor(
                 _state.update {
                     val type = state.value.selectedDialogType
                     if (type == WALLET) {
-                        if (!::initialWallet.isInitialized) initialWallet = state.value.selectedWallet
+                        if (!::initialWallet.isInitialized) initialWallet =
+                            state.value.selectedWallet
                         else if (initialWallet == event.value) initialWallet = ""
                     }
                     it.copy(

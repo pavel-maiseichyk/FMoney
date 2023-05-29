@@ -14,9 +14,12 @@ import com.pm.savings.domain.core.util.DateTimeUtil
 import com.pm.savings.domain.operations.model.OperationType
 import com.pm.savings.domain.operations.repository.OperationsDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 @HiltViewModel
 class StatsViewModel @Inject constructor(
@@ -40,7 +43,7 @@ class StatsViewModel @Inject constructor(
         ) { mainCurrency, categories, operations ->
             val localStatsList = operations
                 .filter { it.type == OperationType.Spending }
-                .sortedBy { it.dateTime }
+//                .sortedBy { it.dateTime }
                 .groupBy { it.dateTime.monthNumber to it.dateTime.year }
                 .map { (pair, pageOperations) ->
                     val totalSum = pageOperations.sumOf { it.sum }
@@ -60,6 +63,8 @@ class StatsViewModel @Inject constructor(
                                 isExpanded = false
                             )
                         }
+                        .sortedByDescending { it.sum }
+
                     StatsState(
                         monthNumber = pair.first,
                         year = pair.second,

@@ -9,10 +9,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -101,6 +102,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun FinanceRoot(
     paddingValues: PaddingValues,
@@ -109,6 +111,7 @@ fun FinanceRoot(
     showSnackbar: (String) -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     SideEffect {
         systemUiController.setNavigationBarColor(
@@ -127,7 +130,7 @@ fun FinanceRoot(
 
             SideEffect {
                 systemUiController.setStatusBarColor(
-                    color = Constants.BACKGROUND_COLOR, darkIcons = true
+                    color = Color.Transparent, darkIcons = true
                 )
             }
 
@@ -156,9 +159,9 @@ fun FinanceRoot(
             val viewModel = hiltViewModel<SavingsViewModel>()
             val savings by viewModel.savings.collectAsState()
 
-            SideEffect {
-                systemUiController.setStatusBarColor(Constants.BACKGROUND_COLOR)
-            }
+//            SideEffect {
+//                systemUiController.setStatusBarColor(Constants.BACKGROUND_COLOR)
+//            }
 
             SavingsScreen(savings = savings, onEvent = { event ->
                 when (event) {
@@ -196,6 +199,7 @@ fun FinanceRoot(
                         }
 
                         is UiEvent.ShowSnackbar -> {
+                            keyboardController?.hide()
                             showSnackbar(event.uiText.asString(context))
                         }
 
@@ -235,6 +239,7 @@ fun FinanceRoot(
                         }
 
                         is UiEvent.ShowSnackbar -> {
+                            keyboardController?.hide()
                             showSnackbar(event.uiText.asString(context))
                         }
 
@@ -244,7 +249,7 @@ fun FinanceRoot(
             }
 
 //            SideEffect {
-//                systemUiController.setStatusBarColor(Color(state.color))
+//                systemUiController.setSystemBarsColor(Color(state.color))
 //            }
 
             OperationDetailsScreen(state = state, onEvent = { event ->
@@ -282,6 +287,7 @@ fun FinanceRoot(
                         }
 
                         is UiEvent.ShowSnackbar -> {
+                            keyboardController?.hide()
                             showSnackbar(event.uiText.asString(context))
                         }
 
@@ -290,9 +296,9 @@ fun FinanceRoot(
                 }
             }
 
-//            SideEffect {
-//                systemUiController.setStatusBarColor(Color(state.color))
-//            }
+            SideEffect {
+                systemUiController.setStatusBarColor(Color(state.color))
+            }
 
             WalletDetailsScreen(
                 state = state, onEvent = { viewModel.onEvent(it) }
@@ -359,6 +365,7 @@ fun FinanceRoot(
                         }
 
                         is UiEvent.ShowSnackbar -> {
+                            keyboardController?.hide()
                             showSnackbar(event.uiText.asString(context))
                         }
 

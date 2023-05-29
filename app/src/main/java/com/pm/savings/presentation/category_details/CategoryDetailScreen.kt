@@ -34,6 +34,7 @@ fun CategoryDetailScreen(
     Scaffold(
         topBar = {
             DetailsTopBar(
+                modifier = Modifier.padding(horizontal = Constants.TOP_BAR_PADDING),
                 title = stringResource(R.string.your_category),
                 onBackClick = { onEvent(CategoryDetailsEvent.OnBackClick) },
                 onColorChange = { onEvent(CategoryDetailsEvent.OnPaletteClick) },
@@ -53,15 +54,8 @@ fun CategoryDetailScreen(
                 .background(Color(state.color))
                 .padding(horizontal = Constants.HORIZONTAL_PADDING)
                 .padding(paddingValues),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
-            TextUnit(
-                smallText = stringResource(R.string.title),
-                bigText = state.title,
-                hint = stringResource(R.string.hint_category_title),
-                onValueChange = { onEvent(CategoryDetailsEvent.OnTitleEnter(it)) }
-            )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(24.dp)
@@ -81,7 +75,13 @@ fun CategoryDetailScreen(
                     modifier = Modifier.weight(1f)
                 )
             }
-            Spacer(modifier = Modifier.height(24.dp))
+            TextUnit(
+                smallText = stringResource(R.string.title),
+                bigText = state.title,
+                hint = stringResource(R.string.hint_category_title),
+                onValueChange = { onEvent(CategoryDetailsEvent.OnTitleEnter(it)) }
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             BottomActionButtons(
                 shouldShowDelete = state.shouldShowDelete,
                 textColor = Color(state.color),

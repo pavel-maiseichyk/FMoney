@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "operations")
 data class OperationEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long?,
+    val id: Long? = null,
     val title: String,
     val sum: Double,
     val currency: String,

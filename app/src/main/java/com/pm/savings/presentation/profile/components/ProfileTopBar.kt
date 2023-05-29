@@ -12,7 +12,7 @@ import com.pm.savings.presentation.ui.theme.topBarHeadline
 
 @Composable
 fun ProfileTopBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
@@ -20,7 +20,7 @@ fun ProfileTopBar(
             .height(Constants.TOP_BAR_HEIGHT)
     ) {
         Text(
-            text = "Savings",
+            text = "Profile",
             style = topBarHeadline,
             modifier = Modifier.align(Alignment.Center)
         )

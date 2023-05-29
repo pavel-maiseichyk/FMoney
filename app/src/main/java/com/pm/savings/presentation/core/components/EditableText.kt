@@ -36,9 +36,8 @@ fun EditableText(
                         textAlign = TextAlign.Start
                     )
                 )
-            } else {
-                innerTextField()
             }
+            innerTextField()
         }
     )
 }

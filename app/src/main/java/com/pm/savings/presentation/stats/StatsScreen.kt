@@ -4,9 +4,12 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -100,33 +103,40 @@ fun StatsScreenContent(
 ) {
     Scaffold(
         topBar = {
+            val monthName =
+                Month(state.monthNumber).name.lowercase().replaceFirstChar { it.uppercase() }
             StatsDetailsTopBar(
                 modifier = Modifier.padding(horizontal = Constants.TOP_BAR_PADDING),
                 onLeftArrowClick = { onEvent(StatsEvent.OnLeftArrowClick) },
                 onRightArrowClick = { onEvent(StatsEvent.OnRightArrowClick) },
-                text = "${Month(state.monthNumber)}, ${state.year}",
+                text = "${monthName}, ${state.year}",
                 isPrevButtonVisible = isPrevButtonVisible,
                 isNextButtonVisible = isNextButtonVisible
             )
         }
     ) { paddingValues ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .background(BACKGROUND_COLOR)
-                .padding(HORIZONTAL_PADDING)
+                .padding(horizontal = HORIZONTAL_PADDING)
                 .padding(paddingValues),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            DoughnutChart(
-                categoryWithOperationsUis = state.categoryWithOperationsUis
-            )
-            SubHeadlineWithAction(
-                text = stringResource(R.string.statistics),
-                secondText = "",
-                onTextClick = {}
-            )
-            state.categoryWithOperationsUis.forEach { categoryWithOperationsUi ->
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                DoughnutChart(
+                    categoryWithOperationsUis = state.categoryWithOperationsUis
+                )
+            }
+            item {
+                SubHeadlineWithAction(
+                    text = stringResource(R.string.statistics),
+                    secondText = "",
+                    onTextClick = {}
+                )
+            }
+            items(state.categoryWithOperationsUis) { categoryWithOperationsUi ->
                 CategoryCard(
                     categoryWithOperationsUi = categoryWithOperationsUi,
                     currency = state.currency,

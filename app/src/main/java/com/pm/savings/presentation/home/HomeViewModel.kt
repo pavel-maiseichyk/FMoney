@@ -1,6 +1,5 @@
 package com.pm.savings.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pm.savings.domain.core.repository.UserInfoDataSource
