@@ -30,4 +30,4 @@ FMoney is licensed under the [LICENSE](LICENSE.txt) file. Please review the lice
 
 ## Credits
 
-- Device Mockup: Image created from [Google Pixel 6 mockups](https://deviceframes.com/templates/google-pixel-6).
+Device Mockup: Image created from [Google Pixel 6 mockups](https://deviceframes.com/templates/google-pixel-6).
