@@ -24,10 +24,10 @@ To install FMoney, follow these steps:
 
 If you have any questions, suggestions or issues regarding this project, don't hesitate to contact me at paulmais.dev@gmail.com – contributions and feedback are highly appreciated ;)
 
+## Credits
+
+**Device Mockup:** Image created from [Google Pixel 6 mockups](https://deviceframes.com/templates/google-pixel-6).
+
 ## License
 
 FMoney is licensed under the [LICENSE](LICENSE.txt) file. Please review the license for detailed information on permissions and restrictions.
-
-## Credits
-
-Device Mockup: Image created from [Google Pixel 6 mockups](https://deviceframes.com/templates/google-pixel-6).
