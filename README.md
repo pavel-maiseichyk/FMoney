@@ -1,9 +1,9 @@
 # FMoney
 
-Welcome to FMoney! This app has been my dream ever since I began my Android journey. And now I'm thrilled to start working on it together with the community!
-
 ![banner](./banner.png)
 *Image created from [Google Pixel 6 mockups](https://deviceframes.com/templates/google-pixel-6).*
+
+Welcome to FMoney! This app has been my dream ever since I began my Android journey. And now I'm thrilled to start working on it together with the community!
 
 ## Features
 
