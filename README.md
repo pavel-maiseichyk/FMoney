@@ -15,10 +15,10 @@ Welcome to FMoney! This app has been my dream ever since I began my Android jour
 ## Installation
 
 To install FMoney, follow these steps:
-- Go to the "Releases" section of this repository.
-- Download the latest APK file.
-- Install the APK on your Android device.
-- Launch FMoney and enjoy!
+1. Go to the "Releases" section of this repository.
+2. Download the latest APK file.
+3. Install the APK on your Android device.
+4. Launch FMoney and enjoy!
 
 ## Contributing
 
@@ -26,7 +26,7 @@ If you have any questions, suggestions or issues regarding this project, don't h
 
 ## Credits
 
-**Device Mockup:** Image created from [Google Pixel 6 mockups](https://deviceframes.com/templates/google-pixel-6).
+- **Device Mockup:** Image created from [Google Pixel 6 mockups](https://deviceframes.com/templates/google-pixel-6).
 
 ## License
 
