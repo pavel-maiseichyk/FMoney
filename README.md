@@ -1,7 +1,6 @@
 # FMoney
 
 ![banner](./banner.png)
-*Image created from [Google Pixel 6 mockups](https://deviceframes.com/templates/google-pixel-6).*
 
 Welcome to FMoney! This app has been my dream ever since I began my Android journey. And now I'm thrilled to start working on it together with the community!
 
@@ -28,3 +27,7 @@ If you have any questions, suggestions or issues regarding this project, don't h
 ## License
 
 FMoney is licensed under the [LICENSE](LICENSE.txt) file. Please review the license for detailed information on permissions and restrictions.
+
+## Credits
+
+- Device Mockup: Image created from [Google Pixel 6 mockups](https://deviceframes.com/templates/google-pixel-6).
