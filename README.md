@@ -6,6 +6,8 @@ Welcome to FMoney! This app has been my dream ever since I began my Android jour
 
 ## Features
 
+**Please note that the app is currently in alpha and not all the features may work as expected.**
+
 - **Set Savings Goals:** Set financial goals and track your progress towards achieving them. Stay motivated and visualize your savings journey.
 - **Wallet Management:** Manage multiple wallets within the app. Keep track of your balances and have a comprehensive view of your finances.
 - **Manual Transaction Logging:** Log your financial transactions manually, including income, expenses, and transfers. Maintain a detailed record of your financial activities.
