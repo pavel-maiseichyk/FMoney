@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Savings</string>
+    <string name="app_name">FMoney</string>
     <string name="feature_coming_soon">Feature coming soon!</string>
     <string name="error_couldn_t_delete_item">Error: couldn\'t delete item.</string>
     <string name="deleted_successfully">Deleted successfully!</string>
