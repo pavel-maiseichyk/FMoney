@@ -14,7 +14,7 @@ android {
         minSdk = 23
         targetSdk = 33
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0-beta"
     }
     buildFeatures {
         compose = true
@@ -29,31 +29,22 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isDebuggable = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
-//    compileOptions {
-//        sourceCompatibility = JavaVersion.VERSION_1_8
-//        targetCompatibility = JavaVersion.VERSION_1_8
-//    }
-//
-//    kotlinOptions {
-//        jvmTarget = "1.8"
-//    }
 }
 
 dependencies {
-//    implementation(project(":shared"))
-//    implementation(Deps.composeUi)
-//    implementation(Deps.composeUiTooling)
-//    implementation(Deps.composeUiToolingPreview)
-//    implementation(Deps.composeFoundation)
-//    implementation(Deps.composeMaterial)
-//    implementation(Deps.activityCompose)
-//    implementation(Deps.composeIconsExtended)
     implementation(Deps.composeNavigation)
     implementation(Deps.coilCompose)
     implementation(Deps.accompanistSystemUiController)
+
     val composeBom = platform("androidx.compose:compose-bom:2023.04.01")
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -61,15 +52,8 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
-
     implementation("androidx.compose.material:material-icons-extended")
-
     implementation("androidx.core:core-splashscreen:1.1.0-alpha01")
-
-//    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
-
-//    implementation("androidx.activity:activity-compose:1.6.1")
-
 
     implementation(Deps.dataStorePreferences)
     implementation(Deps.kotlinDateTime)
