@@ -79,7 +79,8 @@ fun CategoryDetailScreen(
                 smallText = stringResource(R.string.title),
                 bigText = state.title,
                 hint = stringResource(R.string.hint_category_title),
-                onValueChange = { onEvent(CategoryDetailsEvent.OnTitleEnter(it)) }
+                onValueChange = { onEvent(CategoryDetailsEvent.OnTitleEnter(it)) },
+                isDigits = false
             )
             Spacer(modifier = Modifier.height(4.dp))
             BottomActionButtons(

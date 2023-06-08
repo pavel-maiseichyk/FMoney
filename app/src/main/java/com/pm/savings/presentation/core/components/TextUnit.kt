@@ -13,7 +13,8 @@ fun TextUnit(
     bigText: String,
     hint: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isDigits: Boolean
 ) {
     Column(
         modifier = modifier,
@@ -26,7 +27,8 @@ fun TextUnit(
         EditableText(
             text = bigText,
             hint = hint,
-            onValueChange = onValueChange
+            onValueChange = onValueChange,
+            isDigits = isDigits
         )
     }
 }

@@ -52,21 +52,24 @@ fun SavingDetailsScreen(
                 smallText = stringResource(id = R.string.title),
                 bigText = state.title,
                 hint = stringResource(R.string.hilt_saving_title),
-                onValueChange = { onEvent(SavingDetailsEvent.OnTitleChange(it)) }
+                onValueChange = { onEvent(SavingDetailsEvent.OnTitleChange(it)) },
+                isDigits = false
             )
             Spacer(modifier = Modifier.height(32.dp))
             TextUnit(
                 smallText = stringResource(id = R.string.all),
                 bigText = state.endSum,
                 hint = stringResource(id = R.string.hint_sum),
-                onValueChange = { onEvent(SavingDetailsEvent.OnEndSumChange(it)) }
+                onValueChange = { onEvent(SavingDetailsEvent.OnEndSumChange(it)) },
+                isDigits = true
             )
             Spacer(modifier = Modifier.height(32.dp))
             TextUnit(
                 smallText = stringResource(id = R.string.saved),
                 bigText = state.savedSum,
                 hint = stringResource(id = R.string.hint_sum),
-                onValueChange = { onEvent(SavingDetailsEvent.OnSavedSumChange(it)) }
+                onValueChange = { onEvent(SavingDetailsEvent.OnSavedSumChange(it)) },
+                isDigits = true
             )
             Spacer(modifier = Modifier.height(32.dp))
             ButtonUnit(

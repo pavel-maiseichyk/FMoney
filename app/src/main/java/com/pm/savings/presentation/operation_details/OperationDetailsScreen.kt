@@ -82,7 +82,8 @@ fun OperationDetailsScreen(
                 smallText = stringResource(id = R.string.sum),
                 bigText = state.sum,
                 hint = stringResource(id = R.string.hint_sum),
-                onValueChange = { onEvent(OperationDetailsEvent.OnSumEnter(it)) }
+                onValueChange = { onEvent(OperationDetailsEvent.OnSumEnter(it)) },
+                isDigits = true
             )
             ButtonUnit(
                 smallText = stringResource(id = R.string.currency),
@@ -103,7 +104,8 @@ fun OperationDetailsScreen(
                 smallText = stringResource(id = R.string.description),
                 bigText = state.description,
                 hint = stringResource(R.string.hint_description),
-                onValueChange = { onEvent(OperationDetailsEvent.OnDescriptionEnter(it)) }
+                onValueChange = { onEvent(OperationDetailsEvent.OnDescriptionEnter(it)) },
+                isDigits = false
             )
             BottomActionButtons(
                 shouldShowDelete = state.id != null,

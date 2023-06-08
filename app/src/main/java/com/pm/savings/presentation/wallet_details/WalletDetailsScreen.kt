@@ -56,13 +56,15 @@ fun WalletDetailsScreen(
                 smallText = stringResource(R.string.title),
                 bigText = state.title,
                 hint = stringResource(R.string.hint_wallet_title),
-                onValueChange = { onEvent(WalletDetailsEvent.OnTitleEnter(it)) }
+                onValueChange = { onEvent(WalletDetailsEvent.OnTitleEnter(it)) },
+                isDigits = false
             )
             TextUnit(
                 smallText = stringResource(R.string.sum),
                 bigText = state.sum,
                 hint = stringResource(R.string.hint_sum),
-                onValueChange = { onEvent(WalletDetailsEvent.OnSumEnter(it)) }
+                onValueChange = { onEvent(WalletDetailsEvent.OnSumEnter(it)) },
+                isDigits = true
             )
             ButtonUnit(
                 smallText = stringResource(R.string.currency),
