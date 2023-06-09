@@ -50,7 +50,7 @@ class OperationDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private lateinit var allCategories: List<Category>
-    private lateinit var initialWallet: String
+    private lateinit var initialOperation: Operation
 
     private val _state = MutableStateFlow(OperationDetailsState())
     var state = combine(
@@ -99,15 +99,26 @@ class OperationDetailsViewModel @Inject constructor(
                         )
                         operationsDataSource.insertOperation(operation)
 
-//                        if (::initialWallet.isInitialized || initialWallet.isNotBlank()) {
-//                            val newWallet = walletsDataSource.getWalletByName(state.value.selectedWallet)
-//                            walletsDataSource.insertWallet(newWallet.copy(sum = newWallet.sum - operation.sum))
-//                            val oldWallet = walletsDataSource.getWalletByName(initialWallet)
-//                            walletsDataSource.insertWallet(oldWallet.copy(sum = oldWallet.sum + operation.sum))
-//                        } else {
-//                            val wallet = walletsDataSource.getWalletByName(state.value.selectedWallet)
-//                            walletsDataSource.insertWallet(wallet.copy(sum = wallet.sum - operation.sum))
-//                        }
+                        if (::initialOperation.isInitialized && initialOperation != operation) {
+                            if (initialOperation.wallet == operation.wallet) {
+                                val wallet = walletsDataSource.getWalletByName(initialOperation.wallet)
+                                val newSum = wallet.sum + operation.sum * operation.type.sign - initialOperation.sum * initialOperation.type.sign
+                                walletsDataSource.insertWallet(wallet.copy(sum = newSum))
+                            } else {
+                                val initialWallet = walletsDataSource.getWalletByName(initialOperation.wallet)
+                                val newInitialWalletSum = initialWallet.sum - initialOperation.sum * initialOperation.type.sign
+                                walletsDataSource.insertWallet(initialWallet.copy(sum = newInitialWalletSum))
+
+                                val newWallet = walletsDataSource.getWalletByName(operation.wallet)
+                                val newWalletSum = initialWallet.sum + operation.sum * operation.type.sign
+                                walletsDataSource.insertWallet(newWallet.copy(sum = newWalletSum))
+                            }
+                        } else {
+                            val wallet = walletsDataSource.getWalletByName(operation.wallet)
+                            val newSum = wallet.sum + operation.sum * operation.type.sign
+                            walletsDataSource.insertWallet(wallet.copy(sum = newSum))
+                        }
+
                         _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.saved_successfully)))
                         _uiChannel.send(UiEvent.PopBackStack)
                     } catch (e: Exception) {
@@ -131,12 +142,16 @@ class OperationDetailsViewModel @Inject constructor(
                 viewModelScope.launch {
                     try {
                         operationsDataSource.deleteOperationById(state.value.id!!)
+
+                        val wallet = walletsDataSource.getWalletByName(_state.value.selectedWallet)
+                        val newSum = wallet.sum + _state.value.sum.toDouble() * _state.value.selectedType.sign
+                        walletsDataSource.insertWallet(wallet.copy(sum = newSum))
+
                         _state.update { it.copy(isDeleteDialogShowing = false) }
                         _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.deleted_successfully)))
+                        _uiChannel.send(UiEvent.PopBackStack)
                     } catch (e: Exception) {
                         _uiChannel.send(UiEvent.ShowSnackbar(UiText.StringResource(R.string.error_couldn_t_delete_item)))
-                    } finally {
-                        _uiChannel.send(UiEvent.PopBackStack)
                     }
                 }
             }
@@ -197,11 +212,6 @@ class OperationDetailsViewModel @Inject constructor(
             is OnListDialogSave -> {
                 _state.update {
                     val type = state.value.selectedDialogType
-                    if (type == WALLET) {
-                        if (!::initialWallet.isInitialized) initialWallet =
-                            state.value.selectedWallet
-                        else if (initialWallet == event.value) initialWallet = ""
-                    }
                     it.copy(
                         currency = if (type == CURRENCY) event.value else state.value.currency,
                         selectedWallet = if (type == WALLET) event.value else state.value.selectedWallet,
@@ -218,6 +228,7 @@ class OperationDetailsViewModel @Inject constructor(
                     if (event.id != -1L) {
                         try {
                             val operation = operationsDataSource.getOperationById(event.id!!)
+                            initialOperation = operation
                             _state.update {
                                 it.copy(
                                     id = operation.id,
