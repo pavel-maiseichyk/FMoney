@@ -112,12 +112,17 @@ fun FinanceRoot(
 ) {
     val systemUiController = rememberSystemUiController()
     val keyboardController = LocalSoftwareKeyboardController.current
+    var statusBarColor by remember { mutableStateOf(Constants.BACKGROUND_COLOR) }
+    var darkIcons by remember { mutableStateOf(true) }
 
-    SideEffect {
-        systemUiController.setNavigationBarColor(
-            color = Color.White, darkIcons = true
+    LaunchedEffect(statusBarColor, darkIcons) {
+        systemUiController.setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = darkIcons
         )
     }
+
+    systemUiController.setNavigationBarColor(Color.White)
 
     NavHost(
         modifier = Modifier.padding(paddingValues),
@@ -128,11 +133,8 @@ fun FinanceRoot(
             val viewModel = hiltViewModel<HomeViewModel>()
             val state by viewModel.state.collectAsState()
 
-            SideEffect {
-                systemUiController.setStatusBarColor(
-                    color = Color.Transparent, darkIcons = true
-                )
-            }
+            statusBarColor = Constants.BACKGROUND_COLOR
+            darkIcons = true
 
             HomeScreen(state = state, onEvent = { event ->
                 when (event) {
@@ -159,9 +161,8 @@ fun FinanceRoot(
             val viewModel = hiltViewModel<SavingsViewModel>()
             val savings by viewModel.savings.collectAsState()
 
-//            SideEffect {
-//                systemUiController.setStatusBarColor(Constants.BACKGROUND_COLOR)
-//            }
+            statusBarColor = Constants.BACKGROUND_COLOR
+            darkIcons = true
 
             SavingsScreen(savings = savings, onEvent = { event ->
                 when (event) {
@@ -187,6 +188,9 @@ fun FinanceRoot(
             val viewModel = hiltViewModel<SavingDetailsViewModel>()
             val state by viewModel.state.collectAsState()
 
+            statusBarColor = Color(state.selectedColor)
+            darkIcons = false
+
             LaunchedEffect(key1 = savingId) {
                 viewModel.onEvent(SavingDetailsEvent.GetSavingId(savingId))
             }
@@ -208,10 +212,6 @@ fun FinanceRoot(
                 }
             }
 
-//            SideEffect {
-//                systemUiController.setStatusBarColor(Color(state.selectedColor))
-//            }
-
             SavingDetailsScreen(state = state, onEvent = { viewModel.onEvent(it) })
         }
 
@@ -226,6 +226,9 @@ fun FinanceRoot(
 
             val viewModel = hiltViewModel<OperationDetailsViewModel>()
             val state by viewModel.state.collectAsState()
+
+            statusBarColor = Color(state.color)
+            darkIcons = false
 
             LaunchedEffect(key1 = operationId) {
                 viewModel.onEvent(OperationDetailsEvent.GetOperationId(operationId))
@@ -247,10 +250,6 @@ fun FinanceRoot(
                     }
                 }
             }
-
-//            SideEffect {
-//                systemUiController.setSystemBarsColor(Color(state.color))
-//            }
 
             OperationDetailsScreen(state = state, onEvent = { event ->
                 when (event) {
@@ -275,6 +274,9 @@ fun FinanceRoot(
             val viewModel = hiltViewModel<WalletDetailsViewModel>()
             val state by viewModel.state.collectAsState()
 
+            statusBarColor = Color(state.color)
+            darkIcons = false
+
             LaunchedEffect(key1 = walletId) {
                 viewModel.onEvent(WalletDetailsEvent.GetWalletId(walletId))
             }
@@ -296,10 +298,6 @@ fun FinanceRoot(
                 }
             }
 
-            SideEffect {
-                systemUiController.setStatusBarColor(Color(state.color))
-            }
-
             WalletDetailsScreen(
                 state = state, onEvent = { viewModel.onEvent(it) }
             )
@@ -310,18 +308,22 @@ fun FinanceRoot(
             val stateList by viewModel.stateListFlow.collectAsState()
             val currentPage = viewModel.initialPage
 
-            SideEffect {
-                systemUiController.setStatusBarColor(Constants.BACKGROUND_COLOR)
-            }
+            statusBarColor = Constants.BACKGROUND_COLOR
+            darkIcons = true
 
-            StatsScreen(initPage = currentPage,
+            StatsScreen(
+                initPage = currentPage,
                 stateList = stateList,
-                onEvent = { viewModel.onEvent(it) })
+                onEvent = { viewModel.onEvent(it) }
+            )
         }
 
         composable(Routes.PROFILE) {
             val viewModel = hiltViewModel<ProfileViewModel>()
             val state by viewModel.state.collectAsState()
+
+            statusBarColor = Constants.BACKGROUND_COLOR
+            darkIcons = true
 
             ProfileScreen(
                 state = state, onEvent = { event ->
@@ -336,8 +338,7 @@ fun FinanceRoot(
 
                         else -> viewModel.onEvent(event)
                     }
-                },
-                systemUiController = systemUiController
+                }
             )
         }
 
@@ -352,6 +353,9 @@ fun FinanceRoot(
 
             val viewModel = hiltViewModel<CategoryDetailsViewModel>()
             val state by viewModel.state.collectAsState()
+
+            statusBarColor = Color(state.color)
+            darkIcons = false
 
             LaunchedEffect(key1 = categoryId) {
                 viewModel.onEvent(CategoryDetailsEvent.GetCategoryId(categoryId))
@@ -374,10 +378,6 @@ fun FinanceRoot(
                 }
             }
 
-//            SideEffect {
-//                systemUiController.setStatusBarColor(Color(state.color))
-//            }
-
             CategoryDetailScreen(
                 state = state,
                 onEvent = { event ->
@@ -390,7 +390,8 @@ fun FinanceRoot(
                             viewModel.onEvent(event)
                         }
                     }
-                })
+                }
+            )
         }
     }
 }
